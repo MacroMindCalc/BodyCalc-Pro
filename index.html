@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fitness Calculators</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    input, select {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background: #22c55e;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+    }
+    .box {
+      margin: 30px auto;
+      padding: 20px;
+      width: 300px;
+      background: #1e293b;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Fitness Calculator Hub</h1>
+
+<div class="container">
+
+  <!-- BMI -->
+  <div class="box">
+    <h2>BMI Calculator</h2>
+    <input type="number" id="weight" placeholder="Weight (kg)">
+    <input type="number" id="height" placeholder="Height (cm)">
+    <button onclick="bmi()">Calculate</button>
+    <p id="bmiResult"></p>
+  </div>
+
+  <!-- Calories -->
+  <div class="box">
+    <h2>Calorie Calculator</h2>
+    <input type="number" id="age" placeholder="Age">
+    <input type="number" id="weightC" placeholder="Weight (kg)">
+    <input type="number" id="heightC" placeholder="Height (cm)">
+    <select id="gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <button onclick="calories()">Calculate</button>
+    <p id="calorieResult"></p>
+  </div>
+
+  <!-- Body Fat -->
+  <div class="box">
+    <h2>Body Fat Calculator</h2>
+    <input type="number" id="waist" placeholder="Waist (cm)">
+    <input type="number" id="neck" placeholder="Neck (cm)">
+    <input type="number" id="heightBF" placeholder="Height (cm)">
+    <button onclick="bodyFat()">Calculate</button>
+    <p id="fatResult"></p>
+  </div>
+
+  <!-- Protein -->
+  <div class="box">
+    <h2>Protein Intake Calculator</h2>
+    <input type="number" id="weightP" placeholder="Weight (kg)">
+    <button onclick="protein()">Calculate</button>
+    <p id="proteinResult"></p>
+  </div>
+
+</div>
+
+<script>
+function bmi() {
+  let w = document.getElementById("weight").value;
+  let h = document.getElementById("height").value / 100;
+  let result = (w / (h * h)).toFixed(1);
+  document.getElementById("bmiResult").innerText = "BMI: " + result;
+}
+
+function calories() {
+  let age = document.getElementById("age").value;
+  let weight = document.getElementById("weightC").value;
+  let height = document.getElementById("heightC").value;
+  let gender = document.getElementById("gender").value;
+
+  let bmr;
+  if (gender === "male") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+
+  document.getElementById("calorieResult").innerText = "Daily Calories: " + Math.round(bmr);
+}
+
+function bodyFat() {
+  let waist = document.getElementById("waist").value;
+  let neck = document.getElementById("neck").value;
+  let height = document.getElementById("heightBF").value;
+
+  let bf = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+  document.getElementById("fatResult").innerText = "Body Fat: " + bf.toFixed(1) + "%";
+}
+
+function protein() {
+  let weight = document.getElementById("weightP").value;
+  let protein = weight * 1.6;
+  document.getElementById("proteinResult").innerText = "Daily Protein: " + protein + "g";
+}
+</script>
+
+</body>
+</html>
